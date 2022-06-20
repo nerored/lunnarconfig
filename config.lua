@@ -38,8 +38,10 @@ lvim.keys.normal_mode["<leader>ss"] = "<cmd>lua require('spectre').open()<cr>"
 lvim.keys.normal_mode["<leader>sw"] = "<cmd>lua require('spectre').open_visual({select_word=true})<cr>"
 lvim.keys.normal_mode["<leader>sn"] = "viw:lua require('spectre').open_file_search()<cr>"
 lvim.keys.normal_mode["<leader>Q"] = ":wqa<cr>"
-lvim.keys.normal_mode["<leader>Ds"] = '<cmd>lua require("dapui(").float_element()<cr>")'
-lvim.keys.normal_mode["<leader>De"] = '<Cmd>lua require("dapui(").eval()<CR>")'
+lvim.keys.normal_mode["<leader>Ds"] = '<cmd>lua require("dapui").float_element()<cr>")'
+lvim.keys.normal_mode["<leader>De"] = '<Cmd>lua require("dapui").eval()<CR>")'
+lvim.keys.normal_mode["<leader>DQ"] = '<Cmd>lua require("dapui").close()<CR>")'
+lvim.keys.normal_mode["<leader>DS"] = '<Cmd>lua require("dapui").open()<CR>")'
 -- unmap a default keymapping
 -- vim.keymap.del("n", "<C-Up>")
 -- override a default keymapping
@@ -353,15 +355,15 @@ local reopenNvimTreeAndSymbols = function()
 end
 
 local dap, dapui = require("dap"), require("dapui")
-dap.listeners.after.event_initialized["dapui_config"] = function()
+dap.listeners.after["event_initialized"]["dapui_config"] = function()
 	closeNvimTreeAndSymbols()
 	dapui.open()
 end
-dap.listeners.before.event_terminated["dapui_config"] = function()
+dap.listeners.after["event_terminated"]["dapui_config"] = function()
 	dapui.close()
 	reopenNvimTreeAndSymbols()
 end
-dap.listeners.before.event_exited["dapui_config"] = function()
+dap.listeners.after["event_exited"]["dapui_config"] = function()
 	dapui.close()
 	reopenNvimTreeAndSymbols()
 end
