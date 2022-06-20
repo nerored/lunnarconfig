@@ -330,6 +330,7 @@ require("dapui").setup({
 
 local closeNvimTreeAndSymbols = function()
 	vim.cmd(":NvimTreeClose")
+	vim.cmd(":SymbolsOutlineClose")
 end
 
 local reopenNvimTreeAndSymbols = function()
