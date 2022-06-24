@@ -42,6 +42,7 @@ lvim.keys.normal_mode["<leader>Ds"] = '<cmd>lua require("dapui").float_element()
 lvim.keys.normal_mode["<leader>De"] = '<Cmd>lua require("dapui").eval()<CR>")'
 lvim.keys.normal_mode["<leader>DQ"] = '<Cmd>lua require("dapui").close()<CR>")'
 lvim.keys.normal_mode["<leader>DS"] = '<Cmd>lua require("dapui").open()<CR>")'
+
 -- unmap a default keymapping
 -- vim.keymap.del("n", "<C-Up>")
 -- override a default keymapping
@@ -66,16 +67,16 @@ lvim.keys.normal_mode["<leader>DS"] = '<Cmd>lua require("dapui").open()<CR>")'
 -- }
 
 -- Use which-key to add extra bindings with the leader-key prefix
--- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
--- lvim.builtin.which_key.mappings["t"] = {
---   name = "+Trouble",
---   r = { "<cmd>Trouble lsp_references<cr>", "References" },
---   f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
---   d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
---   q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
---   l = { "<cmd>Trouble loclist<cr>", "LocationList" },
---   w = { "<cmd>Trouble workspace_diagnostics<cr>", "Wordspace Diagnostics" },
--- }
+lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
+lvim.builtin.which_key.mappings["t"] = {
+	name = "+Trouble",
+	r = { "<cmd>Trouble lsp_references<cr>", "References" },
+	f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
+	d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
+	q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
+	l = { "<cmd>Trouble loclist<cr>", "LocationList" },
+	w = { "<cmd>Trouble workspace_diagnostics<cr>", "Wordspace Diagnostics" },
+}
 
 -- TODO: User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
@@ -210,6 +211,13 @@ lvim.plugins = {
 	{
 		"folke/trouble.nvim",
 		cmd = "TroubleToggle",
+		config = function()
+			require("trouble").setup({
+				-- your configuration comes here
+				-- or leave it empty to use the default settings
+				-- refer to the configuration section below
+			})
+		end,
 	},
 	{
 		"ray-x/lsp_signature.nvim",
