@@ -69,13 +69,13 @@ lvim.keys.normal_mode["<leader>DS"] = '<Cmd>lua require("dapui").open()<CR>")'
 -- Use which-key to add extra bindings with the leader-key prefix
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 lvim.builtin.which_key.mappings["t"] = {
-    name = "+Trouble",
-    r = { "<cmd>Trouble lsp_references<cr>", "References" },
-    f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
-    d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
-    q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
-    l = { "<cmd>Trouble loclist<cr>", "LocationList" },
-    w = { "<cmd>Trouble workspace_diagnostics<cr>", "Wordspace Diagnostics" },
+	name = "+Trouble",
+	r = { "<cmd>Trouble lsp_references<cr>", "References" },
+	f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
+	d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
+	q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
+	l = { "<cmd>Trouble loclist<cr>", "LocationList" },
+	w = { "<cmd>Trouble workspace_diagnostics<cr>", "Wordspace Diagnostics" },
 }
 
 -- TODO: User Config for predefined plugins
@@ -89,18 +89,18 @@ lvim.builtin.nvimtree.setup.view.side = "left"
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
-    "bash",
-    "c",
-    "javascript",
-    "json",
-    "lua",
-    "python",
-    "typescript",
-    "tsx",
-    "css",
-    "rust",
-    "java",
-    "yaml",
+	"bash",
+	"c",
+	"javascript",
+	"json",
+	"lua",
+	"python",
+	"typescript",
+	"tsx",
+	"css",
+	"rust",
+	"java",
+	"yaml",
 }
 
 lvim.builtin.treesitter.ignore_install = { "haskell" }
@@ -136,134 +136,142 @@ lvim.builtin.treesitter.highlight.enabled = true
 -- -- set a formatter, this will override the language server formatting capabilities (if it exists)
 local formatters = require("lvim.lsp.null-ls.formatters")
 formatters.setup({
-    { command = "stylua", filetypes = { "lua" } },
-    { command = "goimports", filetypes = { "go" } },
+	{ command = "stylua", filetypes = { "lua" } },
+	{ command = "goimports", filetypes = { "go" } },
 })
 
 -- -- set additional linters
 local linters = require("lvim.lsp.null-ls.linters")
 linters.setup({
-    { command = "luacheck", filetypes = { "lua" } },
+	{ command = "luacheck", filetypes = { "lua" } },
 })
 
 -- Additional Plugins
 lvim.plugins = {
-    {
-        "phaazon/hop.nvim",
-        event = "BufRead",
-        config = function()
-            require("hop").setup()
-            vim.api.nvim_set_keymap("n", "s", ":HopWord<cr>", { silent = true })
-            vim.api.nvim_set_keymap("n", "S", ":HopLine<cr>", { silent = true })
-        end,
-    },
-    {
-        "f-person/git-blame.nvim",
-        event = "BufRead",
-        config = function()
-            vim.cmd("highlight default link gitblame SpecialComment")
-            vim.g.gitblame_enabled = 1
-        end,
-    },
-    {
-        "windwp/nvim-spectre",
-        event = "BufRead",
-        config = function()
-            require("spectre").setup()
-        end,
-    },
-    {
-        "andymass/vim-matchup",
-        event = "CursorMoved",
-        config = function()
-            vim.cmd("let g:loaded_matchit = 1")
-            vim.g.matchup_matchparen_offscreen = { method = "popup" }
-        end,
-    },
-    {
-        "p00f/nvim-ts-rainbow",
-    },
-    {
-        "norcalli/nvim-colorizer.lua",
-        config = function()
-            require("colorizer").setup({ "*" }, {
-                RGB = true, -- #RGB hex codes
-                RRGGBB = true, -- #RRGGBB hex codes
-                RRGGBBAA = true, -- #RRGGBBAA hex codes
-                rgb_fn = true, -- CSS rgb() and rgba() functions
-                hsl_fn = true, -- CSS hsl() and hsla() functions
-                css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-                css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
-            })
-        end,
-    },
-    {
-        "ahmedkhalf/lsp-rooter.nvim",
-        event = "BufRead",
-        config = function()
-            require("lsp-rooter").setup()
-        end,
-    },
-    {
-        "simrat39/symbols-outline.nvim",
-        cmd = "SymbolsOutline",
-    },
-    {
-        "folke/trouble.nvim",
-        cmd = "TroubleToggle",
-        config = function()
-            require("trouble").setup({
-                auto_open = true, -- automatically open the list when you have diagnostics
-                auto_close = true, -- automatically close the list when you have no diagnostics
-            })
-        end,
-    },
-    {
-        "ray-x/lsp_signature.nvim",
-        event = "BufRead",
-        config = function()
-            require("lsp_signature").on_attach()
-        end,
-    },
-    {
-        "folke/todo-comments.nvim",
-        event = "BufRead",
-        config = function()
-            require("todo-comments").setup()
-        end,
-    },
-    {
-        "itchyny/vim-cursorword",
-        event = { "BufEnter", "BufNewFile" },
-        config = function()
-            vim.api.nvim_command("augroup user_plugin_cursorword")
-            vim.api.nvim_command("autocmd!")
-            vim.api.nvim_command("autocmd FileType NvimTree,lspsagafinder,dashboard,vista let b:cursorword = 0")
-            vim.api.nvim_command("autocmd WinEnter * if &diff || &pvw | let b:cursorword = 0 | endif")
-            vim.api.nvim_command("autocmd InsertEnter * let b:cursorword = 0")
-            vim.api.nvim_command("autocmd InsertLeave * let b:cursorword = 1")
-            vim.api.nvim_command("augroup END")
-        end,
-    },
-    {
-        "rcarriga/nvim-dap-ui",
-        requires = { "mfussenegger/nvim-dap" },
-    },
-    {
-        "theHamsta/nvim-dap-virtual-text",
-    },
-    {
-        "nvim-telescope/telescope-dap.nvim",
-    },
-    {
-        "projekt0n/github-nvim-theme",
-    },
-    {
-        "tzachar/cmp-tabnine",
-        run = "./install.sh",
-        requires = "hrsh7th/nvim-cmp",
-        event = "InsertEnter",
-    },
+	{
+		"phaazon/hop.nvim",
+		event = "BufRead",
+		config = function()
+			require("hop").setup()
+			vim.api.nvim_set_keymap("n", "s", ":HopWord<cr>", { silent = true })
+			vim.api.nvim_set_keymap("n", "S", ":HopLine<cr>", { silent = true })
+		end,
+	},
+	{
+		"f-person/git-blame.nvim",
+		event = "BufRead",
+		config = function()
+			vim.cmd("highlight default link gitblame SpecialComment")
+			vim.g.gitblame_enabled = 1
+		end,
+	},
+	{
+		"windwp/nvim-spectre",
+		event = "BufRead",
+		config = function()
+			require("spectre").setup()
+		end,
+	},
+	{
+		"andymass/vim-matchup",
+		event = "CursorMoved",
+		config = function()
+			vim.cmd("let g:loaded_matchit = 1")
+			vim.g.matchup_matchparen_offscreen = { method = "popup" }
+		end,
+	},
+	{
+		"p00f/nvim-ts-rainbow",
+	},
+	{
+		"norcalli/nvim-colorizer.lua",
+		config = function()
+			require("colorizer").setup({ "*" }, {
+				RGB = true, -- #RGB hex codes
+				RRGGBB = true, -- #RRGGBB hex codes
+				RRGGBBAA = true, -- #RRGGBBAA hex codes
+				rgb_fn = true, -- CSS rgb() and rgba() functions
+				hsl_fn = true, -- CSS hsl() and hsla() functions
+				css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+				css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+			})
+		end,
+	},
+	{
+		"ahmedkhalf/lsp-rooter.nvim",
+		event = "BufRead",
+		config = function()
+			require("lsp-rooter").setup()
+		end,
+	},
+	{
+		"simrat39/symbols-outline.nvim",
+		cmd = "SymbolsOutline",
+	},
+	{
+		"folke/trouble.nvim",
+		cmd = "TroubleToggle",
+		config = function()
+			require("trouble").setup({
+				auto_open = true, -- automatically open the list when you have diagnostics
+				auto_close = true, -- automatically close the list when you have no diagnostics
+			})
+		end,
+	},
+	{
+		"ray-x/lsp_signature.nvim",
+		event = "BufRead",
+		config = function()
+			require("lsp_signature").on_attach()
+		end,
+	},
+	{
+		"folke/todo-comments.nvim",
+		event = "BufRead",
+		config = function()
+			require("todo-comments").setup()
+		end,
+	},
+	{
+		"itchyny/vim-cursorword",
+		event = { "BufEnter", "BufNewFile" },
+		config = function()
+			vim.api.nvim_command("augroup user_plugin_cursorword")
+			vim.api.nvim_command("autocmd!")
+			vim.api.nvim_command("autocmd FileType NvimTree,lspsagafinder,dashboard,vista let b:cursorword = 0")
+			vim.api.nvim_command("autocmd WinEnter * if &diff || &pvw | let b:cursorword = 0 | endif")
+			vim.api.nvim_command("autocmd InsertEnter * let b:cursorword = 0")
+			vim.api.nvim_command("autocmd InsertLeave * let b:cursorword = 1")
+			vim.api.nvim_command("augroup END")
+		end,
+	},
+	{
+		"rcarriga/nvim-dap-ui",
+		requires = { "mfussenegger/nvim-dap" },
+	},
+	{
+		"theHamsta/nvim-dap-virtual-text",
+	},
+	{
+		"nvim-telescope/telescope-dap.nvim",
+	},
+	{
+		"projekt0n/github-nvim-theme",
+	},
+	{
+		"tzachar/cmp-tabnine",
+		run = "./install.sh",
+		requires = "hrsh7th/nvim-cmp",
+		event = "InsertEnter",
+	},
+	{
+		"iamcco/markdown-preview.nvim",
+		run = "cd app && npm install",
+		ft = "markdown",
+		config = function()
+			vim.g.mkdp_auto_start = 1
+		end,
+	},
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
@@ -282,134 +290,134 @@ lvim.plugins = {
 
 -- dapui
 require("dapui").setup({
-    icons = { expanded = "▾", collapsed = "▸" },
-    mappings = {
-        -- Use a table to apply multiple mappings
-        expand = { "<CR>", "<2-LeftMouse>" },
-        open = "o",
-        remove = "d",
-        edit = "e",
-        repl = "r",
-        toggle = "t",
-    },
-    -- Expand lines larger than the window
-    -- Requires >= 0.7
-    expand_lines = vim.fn.has("nvim-0.7"),
-    -- Layouts define sections of the screen to place windows.
-    -- The position can be "left", "right", "top" or "bottom".
-    -- The size specifies the height/width depending on position.
-    -- Elements are the elements shown in the layout (in order).
-    -- Layouts are opened in order so that earlier layouts take priority in window sizing.
-    layouts = {
-        {
-            elements = {
-                -- Elements can be strings or table with id and size keys.
-                { id = "scopes", size = 0.25 },
-                "breakpoints",
-                "stacks",
-                "watches",
-            },
-            size = 40,
-            position = "left",
-        },
-        {
-            elements = {
-                "repl",
-                "console",
-            },
-            size = 10,
-            position = "bottom",
-        },
-    },
-    floating = {
-        max_height = nil, -- These can be integers or a float between 0 and 1.
-        max_width = nil, -- Floats will be treated as percentage of your screen.
-        border = "single", -- Border style. Can be "single", "double" or "rounded"
-        mappings = {
-            close = { "q", "<Esc>" },
-        },
-    },
-    windows = { indent = 1 },
-    render = {
-        max_type_length = nil, -- Can be integer or nil.
-    },
+	icons = { expanded = "▾", collapsed = "▸" },
+	mappings = {
+		-- Use a table to apply multiple mappings
+		expand = { "<CR>", "<2-LeftMouse>" },
+		open = "o",
+		remove = "d",
+		edit = "e",
+		repl = "r",
+		toggle = "t",
+	},
+	-- Expand lines larger than the window
+	-- Requires >= 0.7
+	expand_lines = vim.fn.has("nvim-0.7"),
+	-- Layouts define sections of the screen to place windows.
+	-- The position can be "left", "right", "top" or "bottom".
+	-- The size specifies the height/width depending on position.
+	-- Elements are the elements shown in the layout (in order).
+	-- Layouts are opened in order so that earlier layouts take priority in window sizing.
+	layouts = {
+		{
+			elements = {
+				-- Elements can be strings or table with id and size keys.
+				{ id = "scopes", size = 0.25 },
+				"breakpoints",
+				"stacks",
+				"watches",
+			},
+			size = 40,
+			position = "left",
+		},
+		{
+			elements = {
+				"repl",
+				"console",
+			},
+			size = 10,
+			position = "bottom",
+		},
+	},
+	floating = {
+		max_height = nil, -- These can be integers or a float between 0 and 1.
+		max_width = nil, -- Floats will be treated as percentage of your screen.
+		border = "single", -- Border style. Can be "single", "double" or "rounded"
+		mappings = {
+			close = { "q", "<Esc>" },
+		},
+	},
+	windows = { indent = 1 },
+	render = {
+		max_type_length = nil, -- Can be integer or nil.
+	},
 })
 
 local closeNvimTreeAndSymbols = function()
-    vim.cmd(":NvimTreeClose")
+	vim.cmd(":NvimTreeClose")
 end
 
 local reopenNvimTreeAndSymbols = function()
-    vim.cmd(":NvimTreeToggle")
+	vim.cmd(":NvimTreeToggle")
 end
 
 local dap, dapui = require("dap"), require("dapui")
 dap.listeners.after["event_initialized"]["dapui_config"] = function()
-    closeNvimTreeAndSymbols()
-    dapui.open()
+	closeNvimTreeAndSymbols()
+	dapui.open()
 end
 dap.listeners.after["event_terminated"]["dapui_config"] = function()
-    dapui.close()
-    reopenNvimTreeAndSymbols()
+	dapui.close()
+	reopenNvimTreeAndSymbols()
 end
 dap.listeners.after["event_exited"]["dapui_config"] = function()
-    dapui.close()
-    reopenNvimTreeAndSymbols()
+	dapui.close()
+	reopenNvimTreeAndSymbols()
 end
 
 vim.g.symbols_outline = {
-    highlight_hovered_item = true,
-    show_guides = true,
-    auto_preview = true,
-    position = "right",
-    relative_width = true,
-    width = 20,
-    auto_close = false,
-    show_numbers = false,
-    show_relative_numbers = false,
-    show_symbol_details = true,
-    preview_bg_highlight = "Pmenu",
-    keymaps = { -- These keymaps can be a string or a table for multiple keys
-        close = { "<Esc>", "q" },
-        goto_location = "<Cr>",
-        focus_location = "o",
-        hover_symbol = "<C-space>",
-        toggle_preview = "K",
-        rename_symbol = "r",
-        code_actions = "a",
-    },
-    lsp_blacklist = {},
-    symbol_blacklist = {},
-    symbols = {
-        File = { icon = "", hl = "TSURI" },
-        Module = { icon = "", hl = "TSNamespace" },
-        Namespace = { icon = "", hl = "TSNamespace" },
-        Package = { icon = "", hl = "TSNamespace" },
-        Class = { icon = "𝓒", hl = "TSType" },
-        Method = { icon = "ƒ", hl = "TSMethod" },
-        Property = { icon = "", hl = "TSMethod" },
-        Field = { icon = "", hl = "TSField" },
-        Constructor = { icon = "", hl = "TSConstructor" },
-        Enum = { icon = "ℰ", hl = "TSType" },
-        Interface = { icon = "ﰮ", hl = "TSType" },
-        Function = { icon = "", hl = "TSFunction" },
-        Variable = { icon = "", hl = "TSConstant" },
-        Constant = { icon = "", hl = "TSConstant" },
-        String = { icon = "𝓐", hl = "TSString" },
-        Number = { icon = "#", hl = "TSNumber" },
-        Boolean = { icon = "⊨", hl = "TSBoolean" },
-        Array = { icon = "", hl = "TSConstant" },
-        Object = { icon = "⦿", hl = "TSType" },
-        Key = { icon = "🔐", hl = "TSType" },
-        Null = { icon = "NULL", hl = "TSType" },
-        EnumMember = { icon = "", hl = "TSField" },
-        Struct = { icon = "𝓢", hl = "TSType" },
-        Event = { icon = "🗲", hl = "TSType" },
-        Operator = { icon = "+", hl = "TSOperator" },
-        TypeParameter = { icon = "𝙏", hl = "TSParameter" },
-    },
+	highlight_hovered_item = true,
+	show_guides = true,
+	auto_preview = true,
+	position = "right",
+	relative_width = true,
+	width = 20,
+	auto_close = false,
+	show_numbers = false,
+	show_relative_numbers = false,
+	show_symbol_details = true,
+	preview_bg_highlight = "Pmenu",
+	keymaps = { -- These keymaps can be a string or a table for multiple keys
+		close = { "<Esc>", "q" },
+		goto_location = "<Cr>",
+		focus_location = "o",
+		hover_symbol = "<C-space>",
+		toggle_preview = "K",
+		rename_symbol = "r",
+		code_actions = "a",
+	},
+	lsp_blacklist = {},
+	symbol_blacklist = {},
+	symbols = {
+		File = { icon = "", hl = "TSURI" },
+		Module = { icon = "", hl = "TSNamespace" },
+		Namespace = { icon = "", hl = "TSNamespace" },
+		Package = { icon = "", hl = "TSNamespace" },
+		Class = { icon = "𝓒", hl = "TSType" },
+		Method = { icon = "ƒ", hl = "TSMethod" },
+		Property = { icon = "", hl = "TSMethod" },
+		Field = { icon = "", hl = "TSField" },
+		Constructor = { icon = "", hl = "TSConstructor" },
+		Enum = { icon = "ℰ", hl = "TSType" },
+		Interface = { icon = "ﰮ", hl = "TSType" },
+		Function = { icon = "", hl = "TSFunction" },
+		Variable = { icon = "", hl = "TSConstant" },
+		Constant = { icon = "", hl = "TSConstant" },
+		String = { icon = "𝓐", hl = "TSString" },
+		Number = { icon = "#", hl = "TSNumber" },
+		Boolean = { icon = "⊨", hl = "TSBoolean" },
+		Array = { icon = "", hl = "TSConstant" },
+		Object = { icon = "⦿", hl = "TSType" },
+		Key = { icon = "🔐", hl = "TSType" },
+		Null = { icon = "NULL", hl = "TSType" },
+		EnumMember = { icon = "", hl = "TSField" },
+		Struct = { icon = "𝓢", hl = "TSType" },
+		Event = { icon = "🗲", hl = "TSType" },
+		Operator = { icon = "+", hl = "TSOperator" },
+		TypeParameter = { icon = "𝙏", hl = "TSParameter" },
+	},
 }
 
 vim.api.nvim_create_autocmd("VimEnter", {
-    command = "hi Normal guibg=NONE ctermbg=NONE",
+	command = "hi Normal guibg=NONE ctermbg=NONE",
 })
