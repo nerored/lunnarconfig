@@ -138,12 +138,14 @@ local formatters = require("lvim.lsp.null-ls.formatters")
 formatters.setup({
 	{ command = "stylua", filetypes = { "lua" } },
 	{ command = "goimports", filetypes = { "go" } },
+	{ command = "eslint", filetypes = { "typescript" } },
 })
 
 -- -- set additional linters
 local linters = require("lvim.lsp.null-ls.linters")
 linters.setup({
 	{ command = "luacheck", filetypes = { "lua" } },
+	{ command = "eslint", filetypes = { "typescript" } },
 })
 
 -- Additional Plugins
