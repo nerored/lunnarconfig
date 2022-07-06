@@ -68,15 +68,15 @@ lvim.keys.normal_mode["<leader>DS"] = '<Cmd>lua require("dapui").open()<CR>")'
 
 -- Use which-key to add extra bindings with the leader-key prefix
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
-lvim.builtin.which_key.mappings["t"] = {
-	name = "+Trouble",
-	r = { "<cmd>Trouble lsp_references<cr>", "References" },
-	f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
-	d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
-	q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
-	l = { "<cmd>Trouble loclist<cr>", "LocationList" },
-	w = { "<cmd>Trouble workspace_diagnostics<cr>", "Wordspace Diagnostics" },
-}
+--lvim.builtin.which_key.mappings["t"] = {
+--	name = "+Trouble",
+--	r = { "<cmd>Trouble lsp_references<cr>", "References" },
+--	f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
+--	d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
+--	q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
+--	l = { "<cmd>Trouble loclist<cr>", "LocationList" },
+--	w = { "<cmd>Trouble workspace_diagnostics<cr>", "Wordspace Diagnostics" },
+--}
 
 -- TODO: User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
@@ -175,14 +175,6 @@ lvim.plugins = {
 		end,
 	},
 	{
-		"andymass/vim-matchup",
-		event = "CursorMoved",
-		config = function()
-			vim.cmd("let g:loaded_matchit = 1")
-			vim.g.matchup_matchparen_offscreen = { method = "popup" }
-		end,
-	},
-	{
 		"p00f/nvim-ts-rainbow",
 	},
 	{
@@ -200,51 +192,14 @@ lvim.plugins = {
 		end,
 	},
 	{
-		"ahmedkhalf/lsp-rooter.nvim",
-		event = "BufRead",
-		config = function()
-			require("lsp-rooter").setup()
-		end,
-	},
-	{
 		"simrat39/symbols-outline.nvim",
 		cmd = "SymbolsOutline",
-	},
-	{
-		"folke/trouble.nvim",
-		cmd = "TroubleToggle",
-		config = function()
-			require("trouble").setup({
-				auto_open = true, -- automatically open the list when you have diagnostics
-				auto_close = true, -- automatically close the list when you have no diagnostics
-			})
-		end,
-	},
-	{
-		"ray-x/lsp_signature.nvim",
-		event = "BufRead",
-		config = function()
-			require("lsp_signature").on_attach()
-		end,
 	},
 	{
 		"folke/todo-comments.nvim",
 		event = "BufRead",
 		config = function()
 			require("todo-comments").setup()
-		end,
-	},
-	{
-		"itchyny/vim-cursorword",
-		event = { "BufEnter", "BufNewFile" },
-		config = function()
-			vim.api.nvim_command("augroup user_plugin_cursorword")
-			vim.api.nvim_command("autocmd!")
-			vim.api.nvim_command("autocmd FileType NvimTree,lspsagafinder,dashboard,vista let b:cursorword = 0")
-			vim.api.nvim_command("autocmd WinEnter * if &diff || &pvw | let b:cursorword = 0 | endif")
-			vim.api.nvim_command("autocmd InsertEnter * let b:cursorword = 0")
-			vim.api.nvim_command("autocmd InsertLeave * let b:cursorword = 1")
-			vim.api.nvim_command("augroup END")
 		end,
 	},
 	{
@@ -272,6 +227,13 @@ lvim.plugins = {
 		ft = "markdown",
 		config = function()
 			vim.g.mkdp_auto_start = 1
+		end,
+	},
+	{
+		"ray-x/lsp_signature.nvim",
+		event = "BufRead",
+		config = function()
+			require("lsp_signature").on_attach()
 		end,
 	},
 }
